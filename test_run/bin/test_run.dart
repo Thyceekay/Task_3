@@ -3,25 +3,35 @@ import 'dart:io';
 void main(List<String> arguments) {
   fileConverter();
 }
-dynamic fileConverter(){
-    var inputTxt = File('input.txt');
-    var outputTxt = File('output.txt');
-    var excludeTxt = File('exclude.text');
 
-    inputTxt.writeAsStringSync("\nFinal try", mode: FileMode.append);
-    outputTxt.writeAsStringSync("\nFinal try", mode: FileMode.append);
-    excludeTxt.writeAsStringSync("Let's keep some lines here");
-    print('Successful');
-    
-  
-    if(inputTxt != outputTxt){
-      {
-        return null;}
-      
-    }
-    if (inputTxt == excludeTxt){
+dynamic fileConverter() {
+  var outputTxt = File('output.txt');
+  File('file.txt').readAsString().then((String contents) {
+    print(contents);
+  });
+
+  outputTxt.writeAsStringSync("\nFinal try", mode: FileMode.append);
+
+  outputTxt.readAsLinesSync();
+
+  if (outputTxt != File('input.txt')) {
+    {
       return null;
     }
-     else {return true;}
+  }
+  if (outputTxt.lengthSync() == 0) {
+    return null;
+  }
+  if (File('input.txt').readAsLinesSync() == File('exclude.txt').readAsLinesSync()) {
+    return content('');
+  } else if (File('input.txt').lengthSync() > File('exclude.txt').lengthSync()) {
+    String contain = File('input.txt') as String;
+    outputTxt = contain as File;
+    return outputTxt;
+  }
+}
 
-    } 
+String content(String let) {
+  let = File('output.txt').readAsLinesSync() as String;
+  return let;
+}
